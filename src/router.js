@@ -9,14 +9,17 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
+        name: "start",
         component: StartScreen
     },
     {
         path: '/question/:id',
+        name: "question",
         component: QuestionPage
     },
     {
         path: '/result',
+        name: 'result',
         component: Result
     }
 

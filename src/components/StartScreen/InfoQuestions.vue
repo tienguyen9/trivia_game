@@ -34,9 +34,9 @@ export default {
     const amountOptions = [10, 20, 30, 40, 50]
     const defaultCategory = {id: 9, name: "General Knowledge"}
     return {
-      amountSelect: amountOptions[1],
+      amountSelect: "",
       amountOptions,
-      categorySelect: defaultCategory,
+      categorySelect: "",
       categories: ""
     }
   },

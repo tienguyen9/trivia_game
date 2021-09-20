@@ -42,7 +42,7 @@ export default {
       let selectedAnswer = buttonElement.innerText;
       this.$emit('answer-clicked', selectedAnswer)
     }
-  }
+  },
 }
 
 </script>

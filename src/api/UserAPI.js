@@ -1,11 +1,5 @@
 export const UserAPI = {
 
-    getUserByName(username){
-        const url = "https://tien-assignment-apis.herokuapp.com"
-        return fetch(`${url}/trivia?username=${username}`)
-            .then(response => response.json())
-    },
-
     postNewUser(user){
         const apiURL = 'https://tien-assignment-apis.herokuapp.com'
         const apiKey = 't3wKgL0uNyz4kXRBOe7ggWmyrf50UKRUM4QSspTYFHZL20gAFIiEu16oFfIIdNvu'
@@ -25,10 +19,10 @@ export const UserAPI = {
         return user;
     },
 
-    updateHighScore(score, userId){
+    updateHighScore(score, username){
         const apiURL = 'https://tien-assignment-apis.herokuapp.com'
         const apiKey = 't3wKgL0uNyz4kXRBOe7ggWmyrf50UKRUM4QSspTYFHZL20gAFIiEu16oFfIIdNvu'
-        fetch(`${apiURL}/trivia/${userId}`, {
+        fetch(`${apiURL}/trivia?username=${username}`, {
             method: 'PATCH',
             headers: {
                 'X-API-Key': apiKey,
@@ -45,4 +39,12 @@ export const UserAPI = {
             })
     }
 
+}
+
+export const getUserByName = async (username) => {
+    const url = `https://tien-assignment-apis.herokuapp.com/trivia?username=${username}`
+    console.log(url)
+    const user = fetch(url)
+        .then(response => response.json())
+    return user
 }

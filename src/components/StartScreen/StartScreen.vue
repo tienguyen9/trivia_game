@@ -5,7 +5,7 @@
     <InfoQuestions @category="changeCategory" @amount="changeAmount"/><br>
     <label>Username:</label>
     <input class="input" v-model="usernameInput" type="text"/><br>
-    <button @click="registerUser"> Start Game </button>
+    <button @click="startGame"> Start Game </button>
   </div>
 </template>
 
@@ -37,7 +37,7 @@ export default {
       console.log(category)
       this.category = category;
     },
-    async registerUser() {
+    async startGame() {
       console.log(this.difficulty)
       try{
         const registerDetails = {
@@ -49,18 +49,23 @@ export default {
       catch(e){
         console.log("error")
       }
+      if(this.amount && this.category && this.difficulty && this.usernameInput){
+        this.$router.push({
+          name: "question",
+          params: {
+            id: 0
+          },
+          query: {
+            username: this.usernameInput,
+            amount: this.amount,
+            category: this.category,
+            difficulty: this.difficulty
+          }
+        })
+      }else{
+        alert("need to fill in form!")
+      }
 
-      this.$router.push({
-        path: "/question/0",
-        params: {
-          questionId: 1
-        },
-        query: {
-          amount: this.amount,
-          category: this.category,
-          difficulty: this.difficulty
-        }
-      })
     },
   },
 

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>Questions!</h1>
-    <p> {{ questions }} </p>
+    <h1>Question {{questionId +1 }} of {{questions.length}}</h1>
+    <p hidden> {{ questions }} </p>
 
-    <question id="question" :question="questions[0]" @answer-clicked="handleNextQuestion"/>
+    <question id="question" :question="questions[questionId]" @answer-clicked="handleNextQuestion"/>
   </div>
 
 </template>
@@ -16,27 +16,59 @@ export default {
   name: "QuestionPage",
   components: {Question},
   async created() {
-    //TODO input from StartScreen later
-    const [error, questions] = await getTriviaGame(10, 9, "medium")
-    this.error = error
-    this.questions = questions
+    this.questionId = parseInt(this.$route.params.id)
+    this.username = this.$route.query.username
+    if(this.questionId == 0){
+      this.answers = ["1"];
+      const [error, questions] = await getTriviaGame(
+          this.$route.query.amount, this.$route.query.category, this.$route.query.difficulty)
+      this.error = error
+      this.questions = questions
+    }
+    else{
+      console.log(this.$route.query.answers)
+      this.answers = this.$route.query.answers
+      this.questions = JSON.parse(this.$route.query.questionData)
+    }
+
+
+
   },
   data() {
     return{
-      questions: ""
+      questions: [],
     }
 
   },
   methods: {
     handleNextQuestion(answer){
-      console.log(answer)
+      this.questionId++
+      this.answers.push(answer)
+      console.log(this.answers)
+      let nextPage = "question"
+      if(this.questionId >= this.questions.length){
+        nextPage = "result"
+      }
       this.$router.push({
-        path: "/",
+        name: nextPage,
+        params: {
+          id: this.questionId
+        },
         query: {
-          foo: 123
+          username: this.username,
+          amount: this.$route.query.amount,
+          category: this.$route.query.category,
+          difficulty: this.$route.query.difficulty,
+          questionData: JSON.stringify(this.questions),
+          answers: this.answers
         }
       })
+
+      //refresh
+      this.$router.go(0);
+
+
     }
-  }
+  },
 }
 </script>
