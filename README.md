@@ -1,4 +1,5 @@
 # tien-trivia-game
+Link to deployed heroku app: https://cryptic-tundra-43059.herokuapp.com/#/
 
 ## Project setup
 ```
